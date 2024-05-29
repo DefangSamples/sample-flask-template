@@ -1,0 +1,19 @@
+version: "3.9"
+name: flask
+services:
+  flask:
+    restart: unless-stopped
+    build:
+      context: ./flask
+      dockerfile: Dockerfile
+    deploy:
+      resources:
+        reservations:
+          cpus: "1.0"
+          memory: 512M
+    ports:
+      - mode: ingress
+        target: 5000
+        published: 5000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/"]
